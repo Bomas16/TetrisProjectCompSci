@@ -25,7 +25,15 @@
         ctx.beginPath();
         ctx.moveTo(i, 0);
         ctx.lineTo(i, 600);
-        ctx.strokeStyle = "red";
+        ctx.strokeStyle = "grey";
+        ctx.stroke();
+    }
+    var h;
+    for (h = 30; h < 600; h+= 30) {
+        ctx.beginPath();
+        ctx.moveTo(0, h);
+        ctx.lineTo(600, h);
+        ctx.strokeStyle = "grey";
         ctx.stroke();
     }
 </script>
