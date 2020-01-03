@@ -29,7 +29,7 @@
         ctx.stroke();
     }
     var h;
-    for (h = 30; h < 600; h+= 30) {
+    for (h = 30; h < 600; h += 30) {
         ctx.beginPath();
         ctx.moveTo(0, h);
         ctx.lineTo(600, h);
@@ -42,13 +42,26 @@
     </h2>
 
     <script>
+        var bag = [];
+        function refill() {
+            var bag = ["i", "o", "t", "s", "z", "l", "j"];
+        }
+
+        function takeFromBag(x) {
+
+        }
         function runGame() {
             spawnPiece();
 
         }
 
         function spawnPiece() {
-            var pieces = ["l", "o", "t", "s", "z", "l", "j"];
+            if (bag.length === 0) {
+                refill();
+            }
+
+
+
         }
 
         function Lpiece() {
