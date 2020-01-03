@@ -58,20 +58,20 @@
         }
 
         function takeFromBag(x) {
-
+            var y = bag.indexOf(x);
+            bag.splice(y, 1);
         }
         function runGame() {
             spawnPiece();
 
         }
-
         function spawnPiece() {
             if (bag.length === 0) {
                 refill();
             }
-
-
-
+            var piece = bag[Math.random() * 7];
+            takeFromBag(piece);
+            return piece;
         }
 
         var piece = {
