@@ -36,6 +36,16 @@
         ctx.strokeStyle = "grey";
         ctx.stroke();
     }
+    var grid = [];
+    var b;
+    var a;
+    for (a = 1; a < 21; a++) {
+        var booList = {};
+        for (b = 0; b < 10; b++) {
+            booList[a] = false;
+        }
+        grid.push(booList);
+    }
 </script>
     <h2>
     <button onclick="runGame" > Press to Start game! </button>
@@ -43,7 +53,6 @@
 
     <script>
         var bag = [];
-        var test;
         function refill() {
             bag = ["i", "o", "t", "s", "z", "l", "j"];
         }
@@ -65,18 +74,32 @@
 
         }
 
-        function Lpiece() {
-            this.pos = 0;
-
-
-            this.changePos = function () {
+        var piece = {
+            pos : 0,
+            changePos()  {
                 this.pos++;
-                if (pos === 4) {
-                    pos = 0;
+                if (this.pos === 4) {
+                    this.pos = 0;
                 }
-
             }
         }
+
+
+
+        var Lpiece = Object.create(piece);
+
+        var Opiece = Object.create(piece);
+
+        var Tpiece = Object.create(piece);
+
+        var Spiece = Object.create(piece);
+
+        var Zpiece = Object.create(piece);
+
+        var Jpiece = Object.create(piece);
+
+        var Ipiece = Object.create(piece);
+
     </script>
 </div>
 
