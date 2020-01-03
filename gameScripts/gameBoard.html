@@ -25,7 +25,7 @@
         ctx.beginPath();
         ctx.moveTo(i, 0);
         ctx.lineTo(i, 600);
-        ctx.strokeStyle = "grey";
+        ctx.strokeStyle = "gray";
         ctx.stroke();
     }
     var h;
@@ -42,12 +42,30 @@
     </h2>
 
     <script>
+        function runGame() {
+            spawnPiece();
 
+        }
+
+        function spawnPiece() {
+            var pieces = ["l", "o", "t", "s", "z", "l", "j"];
+        }
+
+        function Lpiece() {
+            this.pos = 0;
+
+
+            this.changePos = function () {
+                this.pos++;
+                if (pos === 4) {
+                    pos = 0;
+                }
+
+            }
+        }
     </script>
 </div>
 
 </body>
-
-
 
 </html>
