@@ -71,6 +71,27 @@
             }
             var piece = bag[Math.random() * 7];
             takeFromBag(piece);
+            if (piece === "i") {
+                piece = Ipiece;
+            }
+            else if (piece === "o") {
+                piece = Opiece;
+            }
+            else if (piece === "s") {
+                piece = Spiece;
+            }
+            else if (piece === "z") {
+                piece = Zpiece;
+            }
+            else if (piece === "l") {
+                piece = Lpiece;
+            }
+            else if (piece === "j") {
+                piece = Jpiece;
+            }
+            else {
+                piece = Tpiece;
+            }
             return piece;
         }
 
