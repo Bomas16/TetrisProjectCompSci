@@ -52,6 +52,11 @@
     </h2>
 
     <script>
+        function runGame() {
+            spawnPiece();
+
+        }
+
         var bag = [];
         function refill() {
             bag = ["i", "o", "t", "s", "z", "l", "j"];
@@ -60,10 +65,6 @@
         function takeFromBag(x) {
             var y = bag.indexOf(x);
             bag.splice(y, 1);
-        }
-        function runGame() {
-            spawnPiece();
-
         }
         function spawnPiece() {
             if (bag.length === 0) {
@@ -103,11 +104,16 @@
                     this.pos = 0;
                 }
             }
-        }
+        };
 
 
 
         var Lpiece = Object.create(piece);
+        Lpiece.x = 100;
+        Lpiece.y = 40;
+        Lpiece.draw = {
+
+        };
 
         var Opiece = Object.create(piece);
 
