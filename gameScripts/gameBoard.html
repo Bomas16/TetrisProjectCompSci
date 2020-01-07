@@ -23,24 +23,6 @@
 
 
 
-    ctx.fillStyle = "purple";
-    var x = 120;
-    var y = 30;
-    ctx.moveTo(x, y);
-    ctx.lineTo(x, y -= 30);
-    ctx.lineTo(x += 30, y);
-    ctx.lineTo(x, y += 30);
-    ctx.lineTo(x += 30, y);
-    ctx.lineTo(x, y += 30);
-    ctx.lineTo(x -= 90, y);
-    ctx.lineTo(x, y -= 30);
-    ctx.lineTo(x += 30, y);
-    ctx.closePath();
-    ctx.fill();
-
-
-
-
     var i;
     for (i = 30; i < 300; i += 30) {
         ctx.beginPath();
@@ -69,14 +51,13 @@
     }
 </script>
     <h2>
-    <button onclick="runGame" > Press to Start game! </button>
+    <button onclick="runGame()" > Press to Start game! </button>
     </h2>
 
     <script>
         function runGame() {
-            var x = new Tpiece();
-            spawnPiece();
-
+            const currentPiece = spawnPiece();
+            currentPiece.draw();
         }
 
         var bag = [];
@@ -95,58 +76,57 @@
             var piece = bag[Math.random() * 7];
             takeFromBag(piece);
             if (piece === "i") {
-                piece = Ipiece;
+                return Ipiece
             }
             else if (piece === "o") {
-                piece = Opiece;
+                return Opiece
             }
             else if (piece === "s") {
-                piece = Spiece;
+                return Spiece
             }
             else if (piece === "z") {
-                piece = Zpiece;
+                return Zpiece
             }
             else if (piece === "l") {
-                piece = Lpiece;
+                return Lpiece
             }
             else if (piece === "j") {
-                piece = Jpiece;
+                return Jpiece
             }
             else {
-                piece = Tpiece;
+                return Tpiece
             }
-            return piece;
         }
 
-        var piece = {
-            pos : 0,
-            changePos()  {
+        function piece() {
+            piece.pos = 0;
+            piece.changePos = function()  {
                 this.pos++;
                 if (this.pos === 4) {
                     this.pos = 0;
                 }
             }
-        };
+        }
 
 
 
         const Tpiece = Object.create(piece);
-        Tpiece.x = 100;
-        Tpiece.y = 40;
+        Tpiece.x = 120;
+        Tpiece.y = 30;
         Tpiece.draw = function() {
-            ctx.moveTo(this.x, this.y);
-            ctx.lineTo(this.x, this.y - 20);
-            ctx.lineTo(this.x + 20, this.y);
-            ctx.lineTo(this.x, this.y + 20);
-            ctx.lineTo(this.x + 20, this.y);
-            ctx.lineTo(this.x, this.y + 20);
-            ctx.lineTo(this.x - 60, this.y);
-            ctx.lineTo(this.x, this.y - 20);
-            ctx.lineTo(this.x + 20, this.y);
-            ctx.closePath();
-            ctx.fillStyle = "purple";
-            ctx.fill();
-        }
+        ctx.fillStyle = "purple";
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x, this.y -= 30);
+        ctx.lineTo(this.x += 30, this.y);
+        ctx.lineTo(this.x, this.y += 30);
+        ctx.lineTo(this.x += 30, this.y);
+        ctx.lineTo(this.x, this.y += 30);
+        ctx.lineTo(this.x -= 90, this.y);
+        ctx.lineTo(this.x, this.y -= 30);
+        ctx.lineTo(this.x += 30, this.y);
+        ctx.closePath();
+        ctx.fill();
+        };
 
         var Opiece = Object.create(piece);
 
