@@ -20,6 +20,27 @@
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = "black";
     ctx.fillRect(0,0, 300, 600);
+
+
+
+    ctx.fillStyle = "purple";
+    var x = 120;
+    var y = 30;
+    ctx.moveTo(x, y);
+    ctx.lineTo(x, y -= 30);
+    ctx.lineTo(x += 30, y);
+    ctx.lineTo(x, y += 30);
+    ctx.lineTo(x += 30, y);
+    ctx.lineTo(x, y += 30);
+    ctx.lineTo(x -= 90, y);
+    ctx.lineTo(x, y -= 30);
+    ctx.lineTo(x += 30, y);
+    ctx.closePath();
+    ctx.fill();
+
+
+
+
     var i;
     for (i = 30; i < 300; i += 30) {
         ctx.beginPath();
@@ -53,6 +74,7 @@
 
     <script>
         function runGame() {
+            var x = new Tpiece();
             spawnPiece();
 
         }
@@ -108,16 +130,27 @@
 
 
 
-        var Lpiece = Object.create(piece);
-        Lpiece.x = 100;
-        Lpiece.y = 40;
-        Lpiece.draw = {
-
-        };
+        const Tpiece = Object.create(piece);
+        Tpiece.x = 100;
+        Tpiece.y = 40;
+        Tpiece.draw = function() {
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x, this.y - 20);
+            ctx.lineTo(this.x + 20, this.y);
+            ctx.lineTo(this.x, this.y + 20);
+            ctx.lineTo(this.x + 20, this.y);
+            ctx.lineTo(this.x, this.y + 20);
+            ctx.lineTo(this.x - 60, this.y);
+            ctx.lineTo(this.x, this.y - 20);
+            ctx.lineTo(this.x + 20, this.y);
+            ctx.closePath();
+            ctx.fillStyle = "purple";
+            ctx.fill();
+        }
 
         var Opiece = Object.create(piece);
 
-        var Tpiece = Object.create(piece);
+        var Lpiece = Object.create(piece);
 
         var Spiece = Object.create(piece);
 
