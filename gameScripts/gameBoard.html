@@ -20,9 +20,6 @@
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = "black";
     ctx.fillRect(0,0, 300, 600);
-
-
-
     var i;
     for (i = 30; i < 300; i += 30) {
         ctx.beginPath();
@@ -51,13 +48,14 @@
     }
 </script>
     <h2>
-    <button onclick="runGame()" > Press to Start game! </button>
+    <button onclick="runGame" > Press to Start game! </button>
     </h2>
 
     <script>
         function runGame() {
-            const currentPiece = spawnPiece();
-            currentPiece.draw();
+            var x = new Tpiece();
+            spawnPiece();
+
         }
 
         var bag = [];
@@ -76,70 +74,158 @@
             var piece = bag[Math.random() * 7];
             takeFromBag(piece);
             if (piece === "i") {
-                return Ipiece
+                piece = Ipiece;
             }
             else if (piece === "o") {
-                return Opiece
+                piece = Opiece;
             }
             else if (piece === "s") {
-                return Spiece
+                piece = Spiece;
             }
             else if (piece === "z") {
-                return Zpiece
+                piece = Zpiece;
             }
             else if (piece === "l") {
-                return Lpiece
+                piece = Lpiece;
             }
             else if (piece === "j") {
-                return Jpiece
+                piece = Jpiece;
             }
             else {
-                return Tpiece
+                piece = Tpiece;
             }
+            return piece;
         }
 
-        function piece() {
-            piece.pos = 0;
-            piece.changePos = function()  {
+        var piece = {
+            pos : 0,
+            changePos()  {
                 this.pos++;
                 if (this.pos === 4) {
                     this.pos = 0;
                 }
             }
-        }
+        };
 
 
 
         const Tpiece = Object.create(piece);
-        Tpiece.x = 120;
-        Tpiece.y = 30;
+        Tpiece.x = 100;
+        Tpiece.y = 40;
         Tpiece.draw = function() {
-        ctx.fillStyle = "purple";
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(this.x, this.y -= 30);
-        ctx.lineTo(this.x += 30, this.y);
-        ctx.lineTo(this.x, this.y += 30);
-        ctx.lineTo(this.x += 30, this.y);
-        ctx.lineTo(this.x, this.y += 30);
-        ctx.lineTo(this.x -= 90, this.y);
-        ctx.lineTo(this.x, this.y -= 30);
-        ctx.lineTo(this.x += 30, this.y);
-        ctx.closePath();
-        ctx.fill();
-        };
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x, this.y - 20);
+            ctx.lineTo(this.x + 20, this.y);
+            ctx.lineTo(this.x, this.y + 20);
+            ctx.lineTo(this.x + 20, this.y);
+            ctx.lineTo(this.x, this.y + 20);
+            ctx.lineTo(this.x - 60, this.y);
+            ctx.lineTo(this.x, this.y - 20);
+            ctx.lineTo(this.x + 20, this.y);
+            ctx.closePath();
+            ctx.fillStyle = "purple";
+            ctx.fill();
+        }
 
-        var Opiece = Object.create(piece);
+        const Opiece = Object.create(piece);
+        Opiece.x = 150;
+        Opiece.y = 30;
+        Opiece.draw = function() {
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x - 30, this.y);
+            ctx.lineTo(this.x, this.y - 30);
+            ctx.lineTo(this.x + 60, this.y);
+            ctx.lineTo(this.x, this.y + 60);
+            ctx.lineTo(this.x - 60, this.y);
+            ctx.lineTo(this.x, this.y - 30);
+            ctx.closePath();
+            ctx.fillStyle = "yellow";
+            ctx.fill();
+        }
 
-        var Lpiece = Object.create(piece);
+        const Lpiece = Object.create(piece);
+        Lpiece.x = 135;
+        Lpiece.y = 45;
+        Lpiece.draw = function() {
+            ctx.moveTo(this.x, this.y);
+            ctx.moveTo(this.x + 15, this.y - 15);
+            ctx.lineTo(this.x - 60, this.y);
+            ctx.lineTo(this.x, this.y + 30);
+            ctx.lineTo(this.x + 90, this.y);
+            ctx.lineTo(this.x, this.y - 60);
+            ctx.lineTo(this.x - 30, this.y);
+            ctx.lineTo(this.x, this.y + 30);
+            ctx.closePath();
+            ctx.fillStyle = "orange";
+            ctx.fill();
+        }
 
-        var Spiece = Object.create(piece);
-
-        var Zpiece = Object.create(piece);
-
-        var Jpiece = Object.create(piece);
-
-        var Ipiece = Object.create(piece);
-
+        const Spiece = Object.create(piece);
+        Spiece.x = 135;
+        Spiece.y = 45;
+        Spiece.draw = function() {
+            ctx.moveTo(this.x, this.y);
+            ctx.moveTo(this.x - 15, this.y - 15);
+            ctx.lineTo(this.x, this.y - 30);
+            ctx.lineTo(this.x + 60, this.y);
+            ctx.lineTo(this.x, this.y + 30);
+            ctx.lineTo(this.x - 30, this.y);
+            ctx.lineTo(this.x, this.y + 30);
+            ctx.lineTo(this.x - 60, this.y);
+            ctx.lineTo(this.x, this.y - 30);
+            ctx.lineTo(this.x + 60, this.y);
+            ctx.closePath();
+            ctx.fillStyle = "green";
+            ctx.fill();
+        }
+        const Zpiece = Object.create(piece);
+        Zpiece.x = 135;
+        Zpiece.y = 45;
+        Zpiece.draw = function() {
+            ctx.moveTo(this.x, this.y);
+            ctx.moveTo(this.x - 15, this.y - 15);
+            ctx.lineTo(this.x - 30, this.y);
+            ctx.lineTo(this.x, this.y - 30);
+            ctx.lineTo(this.x + 60, this.y);
+            ctx.lineTo(this.x, this.y + 30);
+            ctx.lineTo(this.x + 30, this.y);
+            ctx.lineTo(this.x, this.y + 30);
+            ctx.lineTo(this.x - 60, this.y);
+            ctx.lineTo(this.x, this.y - 30);
+            ctx.closePath();
+            ctx.fillStyle = "red";
+            ctx.fill();
+        }
+        const Jpiece = Object.create(piece);
+        Jpiece.x = 135;
+        Jpiece.y = 45;
+        Jpiece.draw = function() {
+            ctx.moveTo(this.x, this.y);
+            ctx.moveTo(this.x - 15, this.y - 15);
+            ctx.lineTo(this.x + 60, this.y);
+            ctx.lineTo(this.x, this.y + 30);
+            ctx.lineTo(this.x - 90, this.y);
+            ctx.lineTo(this.x, this.y - 60);
+            ctx.lineTo(this.x + 30, this.y);
+            ctx.lineTo(this.x, this.y + 30);
+            ctx.closePath();
+            ctx.fillStyle = "blue";
+            ctx.fill();
+        }
+        const Ipiece = Object.create(piece);
+        Ipiece.x = 150;
+        Ipiece.y = 30;
+        Jpiece.draw = function() {
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x - 60, this.y);
+            ctx.lineTo(this.x, this.y - 30);
+            ctx.lineTo(this.x + 120, this.y);
+            ctx.lineTo(this.x, this.y + 30);
+            ctx.lineTo(this.x - 60, this.y);
+            ctx.closePath();
+            ctx.fillStyle = "cyan";
+            ctx.fill();
+        }
     </script>
 </div>
 
