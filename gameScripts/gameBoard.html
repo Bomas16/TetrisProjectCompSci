@@ -1,35 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        canvas {
+            z-index: -1;
+            position: absolute;
+            padding-top: 50px;
+            left: 602px;
+        }
+        .wrapper {
+            position: relative;
+            width: 300px;
+            height: 600px;
+        }
+
+        .wrapper canvas {
+            position: absolute;
+            padding-top: 50px;
+            left: 602px;
+        }
+    </style>
     <meta charset="UTF-8">
     <title>tetrisProject 9000</title>
 </head>
 <body>
-<div style="color: blue" align="center">
-<h1>
+<div style="color: blue">
+<h1 align="center">
     Tetris Tetris Tetris
 </h1>
 
+<h2 align="center">
+    <button id="startButton" onclick="runGame()"  > Press to Start game! </button>
+</h2>
+
+</div >
+
+<div class="wrapper">
+
+<canvas id = "gameCanvas" width="300" height="600" ></canvas>
+<canvas id = "pieceCanvas" width="300" height="600"></canvas>
+
 </div>
 
+</body>
 
-<div align="center">
-<canvas id = "myCanvas" width="300" height="600"></canvas>
 <script>
-    var canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
     ctx.fillStyle = "black";
     ctx.fillRect(0,0, 300, 600);
-    var i;
-    for (i = 30; i < 300; i += 30) {
+    for (var i = 30; i < 300; i += 30) {
         ctx.beginPath();
         ctx.moveTo(i, 0);
         ctx.lineTo(i, 600);
         ctx.strokeStyle = "gray";
         ctx.stroke();
     }
-    var h;
-    for (h = 30; h < 600; h += 30) {
+    for (var h = 30; h < 600; h += 30) {
         ctx.beginPath();
         ctx.moveTo(0, h);
         ctx.lineTo(600, h);
@@ -47,18 +74,40 @@
         grid.push(booList);
     }
 </script>
-    <h2>
-    <button onclick="runGame" > Press to Start game! </button>
-    </h2>
 
     <script>
-        function runGame() {
-            var x = new Tpiece();
-            spawnPiece();
+        let squareSize = 30;
 
+        function runGame() {
+            currentPiece = spawnPiece();
+            ctx2.save();
+            currentPiece.draw();
+            window.setInterval(updateGame, 1000);
+            window.setInterval(gameOver, 1000);
         }
 
-        var bag = [];
+        function gameOver() {
+            return false;
+
+            //if statement to check if game is lost
+            //window.clearIntervals();
+        }
+
+        function updateGame() {
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+            ctx2.restore();
+            currentPiece.y += squareSize;
+            currentPiece.draw();
+            //changes positions of the y coord
+            //will be used to excecute player inputs
+        }
+
+        </script>
+
+    <script>
+        const canvas2 = document.getElementById("pieceCanvas");
+        const ctx2 = canvas2.getContext("2d");
+        let bag = [];
         function refill() {
             bag = ["i", "o", "t", "s", "z", "l", "j"];
         }
@@ -71,164 +120,197 @@
             if (bag.length === 0) {
                 refill();
             }
-            var piece = bag[Math.random() * 7];
+            const piece = bag[Math.floor(Math.random() * bag.length)];
             takeFromBag(piece);
-            if (piece === "i") {
-                piece = Ipiece;
+            if (String(piece).localeCompare("t") == 0) {
+                return Tpiece;
             }
-            else if (piece === "o") {
-                piece = Opiece;
+            else if (String(piece).localeCompare("o") == 0) {
+                return Opiece;
             }
-            else if (piece === "s") {
-                piece = Spiece;
+            else if (String(piece).localeCompare("s") == 0) {
+                return Spiece;
             }
-            else if (piece === "z") {
-                piece = Zpiece;
+            else if (String(piece).localeCompare("z") == 0) {
+                return Zpiece;
             }
-            else if (piece === "l") {
-                piece = Lpiece;
+            else if (String(piece).localeCompare("l") == 0) {
+                return Lpiece;
             }
-            else if (piece === "j") {
-                piece = Jpiece;
+            else if (String(piece).localeCompare("j") == 0) {
+                return Jpiece;
             }
             else {
-                piece = Tpiece;
+                return Ipiece;
             }
-            return piece;
         }
 
-        var piece = {
-            pos : 0,
-            changePos()  {
+        function piece()  {
+            piece.pos = 0;
+            piece.changePos =function() {
                 this.pos++;
                 if (this.pos === 4) {
                     this.pos = 0;
                 }
             }
-        };
+        }
 
 
 
         const Tpiece = Object.create(piece);
-        Tpiece.x = 100;
-        Tpiece.y = 40;
+        Tpiece.x = 135;
+        Tpiece.y = 45;
         Tpiece.draw = function() {
-            ctx.moveTo(this.x, this.y);
-            ctx.lineTo(this.x, this.y - 20);
-            ctx.lineTo(this.x + 20, this.y);
-            ctx.lineTo(this.x, this.y + 20);
-            ctx.lineTo(this.x + 20, this.y);
-            ctx.lineTo(this.x, this.y + 20);
-            ctx.lineTo(this.x - 60, this.y);
-            ctx.lineTo(this.x, this.y - 20);
-            ctx.lineTo(this.x + 20, this.y);
-            ctx.closePath();
-            ctx.fillStyle = "purple";
-            ctx.fill();
-        }
+            Tpiece.ox = Tpiece.x;
+            Tpiece.oy = Tpiece.y;
+            ctx2.beginPath();
+            ctx2.moveTo(this.x, this.y);
+            ctx2.lineTo(this.x -= squareSize / 2, this.y -= squareSize / 2);
+            ctx2.lineTo(this.x, this.y -= squareSize);
+            ctx2.lineTo(this.x += squareSize, this.y);
+            ctx2.lineTo(this.x, this.y += squareSize);
+            ctx2.lineTo(this.x += squareSize, this.y);
+            ctx2.lineTo(this.x, this.y += squareSize);
+            ctx2.lineTo(this.x -= squareSize * 3, this.y);
+            ctx2.lineTo(this.x, this.y -= squareSize);
+            ctx2.lineTo(this.x += squareSize, this.y);
+            ctx2.closePath();
+            ctx2.fillStyle = "purple";
+            ctx2.fill();
+            Tpiece.x = Tpiece.ox;
+            Tpiece.y = Tpiece.oy;
+        };
 
         const Opiece = Object.create(piece);
         Opiece.x = 150;
         Opiece.y = 30;
         Opiece.draw = function() {
-            ctx.moveTo(this.x, this.y);
-            ctx.lineTo(this.x - 30, this.y);
-            ctx.lineTo(this.x, this.y - 30);
-            ctx.lineTo(this.x + 60, this.y);
-            ctx.lineTo(this.x, this.y + 60);
-            ctx.lineTo(this.x - 60, this.y);
-            ctx.lineTo(this.x, this.y - 30);
-            ctx.closePath();
-            ctx.fillStyle = "yellow";
-            ctx.fill();
-        }
+            Opiece.ox = Opiece.x;
+            Opiece.oy = Opiece.y;
+            ctx2.beginPath();
+            ctx2.moveTo(this.x, this.y);
+            ctx2.lineTo(this.x -= squareSize, this.y);
+            ctx2.lineTo(this.x, this.y -= squareSize);
+            ctx2.lineTo(this.x += squareSize * 2, this.y);
+            ctx2.lineTo(this.x, this.y += squareSize * 2);
+            ctx2.lineTo(this.x -= squareSize * 2, this.y);
+            ctx2.lineTo(this.x, this.y -= squareSize);
+            ctx2.closePath();
+            ctx2.fillStyle = "yellow";
+            ctx2.fill();
+            Opiece.x = Opiece.ox;
+            Opiece.y = Opiece.oy;
+        };
 
         const Lpiece = Object.create(piece);
         Lpiece.x = 135;
         Lpiece.y = 45;
         Lpiece.draw = function() {
-            ctx.moveTo(this.x, this.y);
-            ctx.moveTo(this.x + 15, this.y - 15);
-            ctx.lineTo(this.x - 60, this.y);
-            ctx.lineTo(this.x, this.y + 30);
-            ctx.lineTo(this.x + 90, this.y);
-            ctx.lineTo(this.x, this.y - 60);
-            ctx.lineTo(this.x - 30, this.y);
-            ctx.lineTo(this.x, this.y + 30);
-            ctx.closePath();
-            ctx.fillStyle = "orange";
-            ctx.fill();
-        }
+            Lpiece.ox = Lpiece.x;
+            Lpiece.oy = Lpiece.y;
+            ctx2.beginPath();
+            ctx2.moveTo(this.x, this.y);
+            ctx2.moveTo(this.x += squareSize / 2, this.y -= squareSize / 2);
+            ctx2.lineTo(this.x -= squareSize * 2, this.y);
+            ctx2.lineTo(this.x, this.y += squareSize);
+            ctx2.lineTo(this.x += squareSize * 3, this.y);
+            ctx2.lineTo(this.x, this.y -= squareSize * 2);
+            ctx2.lineTo(this.x -= squareSize, this.y);
+            ctx2.lineTo(this.x, this.y += squareSize);
+            ctx2.closePath();
+            ctx2.fillStyle = "orange";
+            ctx2.fill();
+            Lpiece.x = Lpiece.ox;
+            Lpiece.y = Lpiece.oy;
+        };
 
         const Spiece = Object.create(piece);
         Spiece.x = 135;
         Spiece.y = 45;
         Spiece.draw = function() {
-            ctx.moveTo(this.x, this.y);
-            ctx.moveTo(this.x - 15, this.y - 15);
-            ctx.lineTo(this.x, this.y - 30);
-            ctx.lineTo(this.x + 60, this.y);
-            ctx.lineTo(this.x, this.y + 30);
-            ctx.lineTo(this.x - 30, this.y);
-            ctx.lineTo(this.x, this.y + 30);
-            ctx.lineTo(this.x - 60, this.y);
-            ctx.lineTo(this.x, this.y - 30);
-            ctx.lineTo(this.x + 60, this.y);
-            ctx.closePath();
-            ctx.fillStyle = "green";
-            ctx.fill();
-        }
+            Spiece.ox = Spiece.x;
+            Spiece.oy = Spiece.y;
+            ctx2.beginPath();
+            ctx2.moveTo(this.x, this.y);
+            ctx2.moveTo(this.x -= squareSize / 2, this.y -= squareSize / 2);
+            ctx2.lineTo(this.x, this.y -= squareSize);
+            ctx2.lineTo(this.x += squareSize * 2, this.y);
+            ctx2.lineTo(this.x, this.y += squareSize);
+            ctx2.lineTo(this.x -= squareSize, this.y);
+            ctx2.lineTo(this.x, this.y += squareSize);
+            ctx2.lineTo(this.x -= squareSize * 2, this.y);
+            ctx2.lineTo(this.x, this.y -= squareSize);
+            ctx2.lineTo(this.x += squareSize * 2, this.y);
+            ctx2.closePath();
+            ctx2.fillStyle = "green";
+            ctx2.fill();
+            Spiece.x = Spiece.ox;
+            Spiece.y = Spiece.oy;
+        };
         const Zpiece = Object.create(piece);
         Zpiece.x = 135;
         Zpiece.y = 45;
         Zpiece.draw = function() {
-            ctx.moveTo(this.x, this.y);
-            ctx.moveTo(this.x - 15, this.y - 15);
-            ctx.lineTo(this.x - 30, this.y);
-            ctx.lineTo(this.x, this.y - 30);
-            ctx.lineTo(this.x + 60, this.y);
-            ctx.lineTo(this.x, this.y + 30);
-            ctx.lineTo(this.x + 30, this.y);
-            ctx.lineTo(this.x, this.y + 30);
-            ctx.lineTo(this.x - 60, this.y);
-            ctx.lineTo(this.x, this.y - 30);
-            ctx.closePath();
-            ctx.fillStyle = "red";
-            ctx.fill();
-        }
+            Zpiece.ox = Zpiece.x;
+            Zpiece.oy = Zpiece.y;
+            ctx2.beginPath();
+            ctx2.moveTo(this.x, this.y);
+            ctx2.moveTo(this.x -= squareSize /2, this.y -= squareSize /2);
+            ctx2.lineTo(this.x -= squareSize, this.y);
+            ctx2.lineTo(this.x, this.y -= squareSize);
+            ctx2.lineTo(this.x += squareSize * 2, this.y);
+            ctx2.lineTo(this.x, this.y += squareSize);
+            ctx2.lineTo(this.x += squareSize, this.y);
+            ctx2.lineTo(this.x, this.y += squareSize);
+            ctx2.lineTo(this.x -= squareSize * 2, this.y);
+            ctx2.lineTo(this.x, this.y -= squareSize);
+            ctx2.closePath();
+            ctx2.fillStyle = "red";
+            ctx2.fill();
+            Zpiece.x = Zpiece.ox;
+            Zpiece.y = Zpiece.oy;
+        };
         const Jpiece = Object.create(piece);
         Jpiece.x = 135;
         Jpiece.y = 45;
         Jpiece.draw = function() {
-            ctx.moveTo(this.x, this.y);
-            ctx.moveTo(this.x - 15, this.y - 15);
-            ctx.lineTo(this.x + 60, this.y);
-            ctx.lineTo(this.x, this.y + 30);
-            ctx.lineTo(this.x - 90, this.y);
-            ctx.lineTo(this.x, this.y - 60);
-            ctx.lineTo(this.x + 30, this.y);
-            ctx.lineTo(this.x, this.y + 30);
-            ctx.closePath();
-            ctx.fillStyle = "blue";
-            ctx.fill();
-        }
+            Jpiece.ox = Jpiece.x;
+            Jpiece.oy = Jpiece.y;
+            ctx2.beginPath();
+            ctx2.moveTo(this.x, this.y);
+            ctx2.moveTo(this.x -= squareSize /2, this.y -= squareSize/2);
+            ctx2.lineTo(this.x += squareSize*2, this.y);
+            ctx2.lineTo(this.x, this.y += squareSize);
+            ctx2.lineTo(this.x -= squareSize * 3, this.y);
+            ctx2.lineTo(this.x, this.y -= squareSize * 2);
+            ctx2.lineTo(this.x += squareSize, this.y);
+            ctx2.lineTo(this.x, this.y += squareSize);
+            ctx2.closePath();
+            ctx2.fillStyle = "blue";
+            ctx2.fill();
+            Jpiece.x = Jpiece.ox;
+            Jpiece.y = Jpiece.oy;
+        };
         const Ipiece = Object.create(piece);
         Ipiece.x = 150;
         Ipiece.y = 30;
-        Jpiece.draw = function() {
-            ctx.moveTo(this.x, this.y);
-            ctx.lineTo(this.x - 60, this.y);
-            ctx.lineTo(this.x, this.y - 30);
-            ctx.lineTo(this.x + 120, this.y);
-            ctx.lineTo(this.x, this.y + 30);
-            ctx.lineTo(this.x - 60, this.y);
-            ctx.closePath();
-            ctx.fillStyle = "cyan";
-            ctx.fill();
-        }
+        Ipiece.draw = function() {
+            Ipiece.ox = Ipiece.x;
+            Ipiece.oy = Ipiece.y;
+            ctx2.beginPath();
+            ctx2.moveTo(this.x, this.y);
+            ctx2.lineTo(this.x -= squareSize * 2, this.y);
+            ctx2.lineTo(this.x, this.y -= squareSize);
+            ctx2.lineTo(this.x += squareSize * 4, this.y);
+            ctx2.lineTo(this.x, this.y += squareSize);
+            ctx2.lineTo(this.x -= squareSize * 2, this.y);
+            ctx2.closePath();
+            ctx2.fillStyle = "cyan";
+            ctx2.fill();
+            Ipiece.x = Ipiece.ox;
+            Ipiece.y = Ipiece.oy;
+        };
     </script>
-</div>
-
-</body>
 
 </html>
+
