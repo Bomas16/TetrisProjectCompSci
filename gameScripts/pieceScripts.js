@@ -41,7 +41,7 @@ function spawnPiece() {
 
 const piece = function () {
     this.drawPath = [3];
-    this.pos = 0;
+    this.pos = -1;
 
     this.changePos =function() {
         this.pos++;
@@ -76,7 +76,7 @@ const piece = function () {
                         moveVert -= squareSize;
                 }
             }
-            drawSquare(currentPiece.ox + moveHorz, currentPiece.oy  + moveVert, currentPiece.color);
+            drawSquare(currentPiece.x + moveHorz, currentPiece.y  + moveVert, currentPiece.color);
         }
     }
 };
@@ -88,11 +88,9 @@ function drawSquare(x, y, color) {
 }
 
 const Tpiece = new piece;
-Tpiece.x = 135;
-Tpiece.y = 45;
+Tpiece.x = 120;
+Tpiece.y = 30;
 Tpiece.color = "purple";
-Tpiece.ox = Tpiece.x - 15;
-Tpiece.oy = Tpiece.y - 15;
 Tpiece.turn = function() {
     switch(this.pos) {
         case 0:
@@ -114,19 +112,15 @@ const Opiece = new piece;
 Opiece.x = 150;
 Opiece.y = 30;
 Opiece.color = "yellow";
-Opiece.ox = Opiece.x ;
-Opiece.oy = Opiece.y ;
 Opiece.turn = function() {
     this.drawPath = ["U", "L", "UL"];
     //this one doesnt turn 5head
 };
 
 const Lpiece = new piece;
-Lpiece.x = 135;
-Lpiece.y = 45;
+Lpiece.x = 120;
+Lpiece.y = 30;
 Lpiece.color = "orange";
-Lpiece.ox = Lpiece.x - 15;
-Lpiece.oy = Lpiece.y - 15;
 Lpiece.turn = function() {
     switch(this.pos) {
         case 0:
@@ -145,11 +139,9 @@ Lpiece.turn = function() {
 };
 
 const Spiece = new piece;
-Spiece.x = 135;
-Spiece.y = 45;
+Spiece.x = 120;
+Spiece.y = 30;
 Spiece.color = "green";
-Spiece.ox = Spiece.x - 15;
-Spiece.oy = Spiece.y - 15;
 Spiece.turn = function() {
     switch(this.pos) {
         case 0:
@@ -167,11 +159,9 @@ Spiece.turn = function() {
     }
 };
 const Zpiece = new piece;
-Zpiece.x = 135;
-Zpiece.y = 45;
+Zpiece.x = 120;
+Zpiece.y = 30;
 Zpiece.color = "red";
-Zpiece.ox = Zpiece.x - 15;
-Zpiece.oy = Zpiece.y - 15;
 Zpiece.turn = function() {
     switch(this.pos) {
         case 0:
@@ -189,11 +179,9 @@ Zpiece.turn = function() {
     }
 };
 const Jpiece = new piece;
-Jpiece.x = 135;
-Jpiece.y = 45;
+Jpiece.x = 120;
+Jpiece.y = 30;
 Jpiece.color = "blue";
-Jpiece.ox = Jpiece.x - 15;
-Jpiece.oy = Jpiece.y - 15;
 Jpiece.turn = function() {
     switch(this.pos) {
         case 0:
@@ -214,25 +202,23 @@ const Ipiece = new piece;
 Ipiece.x = 150;
 Ipiece.y = 30;
 Ipiece.color = "cyan";
-Ipiece.ox = Ipiece.x;
-Ipiece.oy = Ipiece.y;
 Ipiece.turn = function() {
     switch(this.pos) {
         case 0:
             this.drawPath = ["L", "R", "LL"];
             break;
         case 1:
-            Tpiece.ox -= squareSize;
+            Tpiece.x -= squareSize;
             this.drawPath = ["U", "D", "DD"];
+            Tpiece.x -= squareSize;
             break;
         case 2:
-            Tpiece.oy -= squareSize;
+            Tpiece.y -= squareSize;
             this.drawPath = ["L", "R", "RR"];
+            Tpiece.y += squareSize;
             break;
         case 3:
             this.drawPath = ["U", "UU", "D"];
             break;
     }
-    Ipiece.ox = Ipiece.x;
-    Ipiece.oy = Ipiece.y;
 };

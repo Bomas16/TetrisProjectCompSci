@@ -81,6 +81,7 @@
 
         function runGame() {
             currentPiece = spawnPiece();
+            currentPiece.changePos();
             currentPiece.drawPiece();
             window.setInterval(updateGame, 1000);
             window.setInterval(gameOver, 1000);
@@ -95,6 +96,7 @@
 
         function updateGame() {
             currentPiece.y += squareSize;
+            console.log(currentPiece.y);
             currentPiece.movePiece();
             //changes positions of the y coord
             //will be used to excecute player inputs
