@@ -57,7 +57,7 @@ const piece = function () {
     };
 
     this.drawPiece = function () {
-        drawSquare(currentPiece.ox, currentPiece.oy, currentPiece.color);
+        drawSquare(currentPiece.x, currentPiece.y, currentPiece.color);
         for(var b = 0; b < currentPiece.drawPath.length; b++) {
             moveHorz = 0;
             moveVert = 0;

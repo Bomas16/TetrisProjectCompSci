@@ -78,12 +78,15 @@
     <script>
         let squareSize = 30;
         let currentPiece;
+        let isRunning = false;
 
         function runGame() {
+            if (!isRunning) {
+                return -1;
+            }
             currentPiece = spawnPiece();
             currentPiece.changePos();
             currentPiece.drawPiece();
-            window.setInterval(updateGame, 1000);
             window.setInterval(gameOver, 1000);
         }
 
