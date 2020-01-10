@@ -22,6 +22,12 @@
     </style>
     <meta charset="UTF-8">
     <title>tetrisProject 9000</title>
+
+    <script>
+        function reloadPage() {
+            location.reload();
+        }
+    </script>
 </head>
 <body>
 <div style="color: blue">
@@ -77,16 +83,20 @@
 
     <script>
         let squareSize = 30;
-        let currentPiece;
+        let currentPiece = null;
         let isRunning = false;
 
         function runGame() {
-            if (!isRunning) {
+            if (isRunning) {
                 return -1;
             }
-            currentPiece = spawnPiece();
+            isRunning = true;
+            if (currentPiece === null) {
+                currentPiece = spawnPiece();
+            }
             currentPiece.changePos();
             currentPiece.drawPiece();
+            window.setInterval(updateGame, 1000);
             window.setInterval(gameOver, 1000);
         }
 
@@ -99,10 +109,9 @@
 
         function updateGame() {
             currentPiece.y += squareSize;
-            console.log(currentPiece.y);
             currentPiece.movePiece();
             //changes positions of the y coord
-            //will be used to excecute player inputs
+            //will be used to execute player inputs
         }
 
         </script>

@@ -81,7 +81,6 @@ const piece = function () {
     }
 };
 
-
 function drawSquare(x, y, color) {
     ctx2.fillStyle = color;
     ctx2.fillRect(x, y, squareSize, squareSize);
